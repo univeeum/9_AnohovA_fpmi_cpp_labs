@@ -42,7 +42,10 @@ std::string DecToHaxadec(int n) {
 int main() {
     int n;
     std::cin >> n;
+    if (n < 0) {
+        std::cout << "Error\n";
+        return 0;
+    }
     //std::cout << DecToBin(13) << " " << DecToHaxadec(13) << '\n'; 
-
     std::cout << DecToBin(n) << ' ' << DecToHaxadec(n) << '\n';
 }

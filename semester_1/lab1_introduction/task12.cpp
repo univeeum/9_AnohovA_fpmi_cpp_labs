@@ -15,6 +15,11 @@ int main() {
     int n, k;
     std::cin >> n >> k;
 
+    if (n < 1 || n > 7 || k < 1 || k > 99 || n > k) {
+        std::cout << "Error\n";
+        return 0;
+    }
+
     int week_num = 0;
 
     std::cout << formatNum(week_num + 1) << " |   ";
@@ -30,6 +35,5 @@ int main() {
         }
         std::cout << formatNum(i + 1) << ' '; 
     }
-    
     std::cout << '\n';
 }

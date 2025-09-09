@@ -2,17 +2,16 @@
 
 long long binpow(long long num, long long x) {
     long long result = 1;
-
     while(x > 0) {
-        
         if (x & 1) {
-            result *= num; x--;
+            result *= num; 
+            x--;
         }
         else {
-            num *= num; x /= 2;
+            num *= num; 
+            x /= 2;
         }
     }
-
     return result;
 }
 
@@ -20,6 +19,12 @@ int main() {
 
     int n;
     std::cin >> n;
+
+    if (n <= 0) {
+        std::cout << "Error\n";
+        return 0;
+    }
+
     long long sum = 0;
 
     for (int i = 1; i <= n; i++) {
