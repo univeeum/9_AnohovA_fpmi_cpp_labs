@@ -16,7 +16,6 @@ long long binpow(long long num, long long x) {
 }
 
 int main() {
-
     int n;
     std::cin >> n;
 
@@ -26,7 +25,7 @@ int main() {
     }
 
     long long sum = 0;
-
+    
     for (int i = 1; i <= n; i++) {
         sum += binpow(i, i);
     }

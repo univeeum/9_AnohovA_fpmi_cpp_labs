@@ -1,7 +1,6 @@
 #include <iostream> 
 #include <algorithm>
 
-
 std::string DecToBin(int n) {
     std::string ans = "";
     int rem;
