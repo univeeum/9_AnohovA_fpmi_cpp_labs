@@ -24,8 +24,7 @@ std::string DecToHaxadec(int n) {
 
         if (rem < 10) {
             ans += (rem + '0');
-        }
-        else {
+        } else {
             if (rem == 10) ans += "A";
             if (rem == 11) ans += "B";
             if (rem == 12) ans += "C";
@@ -40,11 +39,16 @@ std::string DecToHaxadec(int n) {
 
 int main() {
     int n;
-    std::cin >> n;
-    if (n < 0) {
+
+    if (!(std::cin >> n) || n < 0) {
         std::cout << "Error\n";
+        std::exit(1);
+    }
+
+    if (n == 0) {
+        std::cout << "0 0\n";
         return 0;
     }
-    //std::cout << DecToBin(13) << " " << DecToHaxadec(13) << '\n'; 
+ 
     std::cout << DecToBin(n) << ' ' << DecToHaxadec(n) << '\n';
 }

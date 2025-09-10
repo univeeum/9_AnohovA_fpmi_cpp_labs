@@ -4,8 +4,7 @@ std::string formatNum(int num) {
     std::string ans = std::to_string(num);
     if (num >= 10) {
         return ans;
-    }
-    else {
+    } else {
         ans = " " + ans;
         return ans;
     }
@@ -13,11 +12,10 @@ std::string formatNum(int num) {
 
 int main() {
     int n, k;
-    std::cin >> n >> k;
 
-    if (n < 1 || n > 7 || k < 1 || k > 99 || n > k) {
+    if (!(std::cin >> n >> k) || (n < 1 || n > 7 || k < 1 || k > 99 || n > k)) {
         std::cout << "Error\n";
-        return 0;
+        std::exit(1);
     }
 
     int week_num = 0;

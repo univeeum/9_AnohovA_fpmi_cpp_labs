@@ -2,12 +2,13 @@
 
 long long binpow(long long num, long long x) {
     long long result = 1;
+    if (x == 0) return 1;
+    
     while(x > 0) {
         if (x & 1) {
             result *= num; 
             x--;
-        }
-        else {
+        } else {
             num *= num; 
             x /= 2;
         }
@@ -17,22 +18,22 @@ long long binpow(long long num, long long x) {
 
 int main() {
     int n;
-    std::cin >> n;
 
-    if (n <= 0) {
+    if (!(std::cin >> n) || n <= 0) {
         std::cout << "Error\n";
-        return 0;
+        std::exit(1);
     }
 
     long long sum = 0;
-    
+
     for (int i = 1; i <= n; i++) {
         sum += binpow(i, i);
     }
     std::cout << sum << '\n';
-
 }
+
 /*
+
 Из условия надо отметить что сумма S растет очень быстро. Для n = 5, 6, 10 выводится корректный результат,
 но уже при 100, 200, 500, 1000 мы видим неверные отрицательные и положительные ответы. Это происходит 
 из за переполнения типа long long уже при маленьком n = 16. В результате происходит переполнение и неверный результат. 

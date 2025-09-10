@@ -2,11 +2,10 @@
 
 int main() {
     int n;
-    std::cin >> n;
 
-    if (n <= 0) {
+    if (!(std::cin >> n) || n <= 0) {
         std::cout << "Error\n";
-        return 0;
+        std::exit(1);
     }
 
     long long prev1 = 0, prev2 = 1;

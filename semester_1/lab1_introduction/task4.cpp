@@ -2,11 +2,10 @@
 
 int main() {
     int k;
-    std::cin >> k;
-    
-    if (k < 0) {
+
+    if (!(std::cin >> k) || k < 0) {
         std::cout << "Error\n";
-        return 0;
+        std::exit(1);
     }
 
     long long result = 1;
@@ -14,8 +13,7 @@ int main() {
         for (int i = 1; i <= k; i += 2) {
             result *= i;
         }
-    }
-    else{
+    } else{
         for (int i = 2; i <= k; i += 2) {
             result *= i;
         }
