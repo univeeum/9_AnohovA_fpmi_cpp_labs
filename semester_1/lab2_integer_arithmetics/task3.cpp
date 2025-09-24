@@ -20,7 +20,7 @@ int main () {
         return 1;
     }
 
-    if (num.empty() || !OnlyNumbers(num) || (num.size() > 1 && num[0] == '0')) {
+    if (num.empty() || !OnlyNumbers(num) || num[0] == '0') {
         std::cout << "Error\n";
         return 1;
     }
@@ -35,6 +35,6 @@ int main () {
     result += min_digit;
     result += num;
     result += min_digit;
-    
+
     std::cout << result << '\n';
 }
