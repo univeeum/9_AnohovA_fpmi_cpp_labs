@@ -1,6 +1,4 @@
 build/
-lab1_introduction/build/
-
 CMakeCache.txt
 CMakeFiles/
 Makefile
