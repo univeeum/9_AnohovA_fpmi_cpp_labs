@@ -6,6 +6,10 @@
 // dymanic arrays
 int main(int argc, char* argv[]) {
 
+    std::cout << "Usage:\n";
+    std::cout << "  " << argv[0] << "          - manual input\n";
+    std::cout << "  " << argv[0] << " --random - random filling\n\n";
+
     int n, a, b;
     std::cout << "Enter the number of array elements\n";
     if (!(std::cin >> n) || n <= 0) {
@@ -26,6 +30,8 @@ int main(int argc, char* argv[]) {
     int* array = new int[n];
 
     // select filling method
+
+
     if (argc > 1 && std::string(argv[1]) == "--random") {
         int ra, rb;
         std::cout << "Enter random bounds a and b\n";

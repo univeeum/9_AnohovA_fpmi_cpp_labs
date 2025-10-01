@@ -8,6 +8,11 @@
 static const int N = 1000;
 
 int main(int argc, char* argv[]) {
+    
+    std::cout << "Usage:\n";
+    std::cout << "  " << argv[0] << "          - manual input\n";
+    std::cout << "  " << argv[0] << " --random - random filling\n\n";
+
     int array[N];
     int min_element = INT_MAX;
     int n;
