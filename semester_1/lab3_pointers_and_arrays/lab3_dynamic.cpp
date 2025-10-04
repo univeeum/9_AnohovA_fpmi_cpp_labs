@@ -2,8 +2,10 @@
 #include <iostream>
 #include <random>
 
+
 // solve task with usage of
 // dymanic arrays
+
 int main(int argc, char* argv[]) {
 
     std::cout << "Usage:\n";
@@ -14,14 +16,15 @@ int main(int argc, char* argv[]) {
     std::cout << "Enter the number of array elements\n";
     if (!(std::cin >> n) || n <= 0) {
         std::cout << "Error\n";
-        return 1;
+        std::exit(1);
     }
     
     std::cout << "Enter a and b\n";
     if (!(std::cin >> a >> b) || std::min(a, b) < 0 || std::max(a, b) > n) {
         std::cout << "Error\n";
-        return 1;
+        std::exit(1);
     }
+
     int low = std::min(a, b);
     int high = std::max(a, b);
     low--; high--;
@@ -31,15 +34,14 @@ int main(int argc, char* argv[]) {
 
     // select filling method
 
-
-    if (argc > 1 && std::string(argv[1]) == "--random") {
+    if (argc > 1 && static_cast<std::string>(argv[1]) == "--random") {
         int ra, rb;
         std::cout << "Enter random bounds a and b\n";
 
         if (!(std::cin >> ra >> rb)) {
             std::cout << "Error\n";
-            delete[] array; 
-            return 1;
+            delete[] array;
+            std::exit(1);
         }
         std::mt19937 gen(1337);
         std::uniform_int_distribution<int> dist(ra, rb);
@@ -52,7 +54,7 @@ int main(int argc, char* argv[]) {
             if (!(std::cin >> array[i])) {
                 std::cout << "Error\n";
                 delete[] array;
-                return 1;
+                std::exit(1);
             }
         }
     }
@@ -74,7 +76,10 @@ int main(int argc, char* argv[]) {
     int sum = 0, first = -1, second = -1;
     for (int i = 0; i < n; i++) {
         if (array[i] > 0) first = i;
-        if (array[i] > 0 && first != -1) second = i;
+        if (array[i] > 0 && first != -1) {
+            second = i;
+            break;
+        }
     }
 
     for (int i = first; i < second; i++) {

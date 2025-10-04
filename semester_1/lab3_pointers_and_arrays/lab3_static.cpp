@@ -20,17 +20,17 @@ int main(int argc, char* argv[]) {
     std::cout << "Enter the number of array elements (no more than " << N << ")\n";
     if (!(std::cin >> n) || (n > N || n <= 0)) {
         std::cout << "Error\n";
-        return 1;
+        std::exit(1);
     }
 
     // select filling method
-        if (argc > 1 && std::string(argv[1]) == "--random") {
+    if (argc > 1 && static_cast<std::string>(argv[1]) == "--random") {
         int a, b;
         std::cout << "Enter random bounds a and b\n";
 
         if (!(std::cin >> a >> b)) {
             std::cout << "Error\n";
-            return 1;
+            std::exit(1);
         }
         std::mt19937 gen(1337);
         std::uniform_int_distribution<int> dist(a, b);
@@ -42,7 +42,7 @@ int main(int argc, char* argv[]) {
         for (int i = 0; i < n; i++) {
             if (!(std::cin >> array[i])) {
                 std::cout << "Error\n";
-                return 1;
+                std::exit(1);
             }
         }
     }
