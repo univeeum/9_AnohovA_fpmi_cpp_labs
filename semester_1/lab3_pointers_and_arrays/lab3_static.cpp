@@ -4,6 +4,7 @@
 
 // solve task with usage of
 // static arrays
+// variant 3
 
 static const int N = 1000;
 
@@ -61,7 +62,7 @@ int main(int argc, char* argv[]) {
     if (sum != -1) {
         std::cout << "Sum of elements after the last zero is " << sum << "\n";
     } else {
-        std::cout << "There are no zero elements or the zero element is the last one :(" << "\n";
+        std::cout << "There are no zero elements :(\n";
     }
 
     // convert array 

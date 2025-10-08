@@ -5,6 +5,7 @@
 
 // solve task with usage of
 // dymanic arrays
+// variant 21
 
 int main(int argc, char* argv[]) {
 
