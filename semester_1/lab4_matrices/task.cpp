@@ -2,6 +2,16 @@
 #include <iostream>
 #include <random>
 
+//TODO make allocate matrix
+void allocate_matrix(double* &x, double* &y, double** &matrix, const int n){
+    x = new double[n];
+    y = new double[n];
+
+    matrix = new double *[n];
+    for (int i = 0; i < n; i++)
+        matrix[i] = new double[n];
+}
+
 void delete_matrix(double **matrix, double *x, double *y, const int n) {
     for (int i = 0; i < n; i++)
         delete[] matrix[i];
@@ -48,13 +58,11 @@ int main(int argc, char *argv[]) {
     }
 
     // Create arrays x y and matrix
-    double *x = new double[n];
-    double *y = new double[n];
+    double *x;
+    double *y;
+    double **matrix;
 
-    double **matrix = new double *[n];
-    for (int i = 0; i < n; i++) {
-        matrix[i] = new double[n];
-    }
+    allocate_matrix(x, y, matrix, n);
 
     if (argc > 1 && static_cast<std::string>(argv[1]) == "--random") {
         // Random input
