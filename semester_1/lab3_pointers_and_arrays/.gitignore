@@ -1,5 +1,6 @@
 build/
 CMakeCache.txt
+CMakeLists.txt
 CMakeFiles/
 Makefile
 .clang-format
