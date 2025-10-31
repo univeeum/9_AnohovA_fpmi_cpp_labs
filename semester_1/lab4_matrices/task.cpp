@@ -1,43 +1,73 @@
 #include <iomanip>
 #include <iostream>
 #include <random>
+#include <cstdint>
 
-//TODO make allocate matrix
-void allocate_matrix(double* &x, double* &y, double** &matrix, const int n){
-    x = new double[n];
-    y = new double[n];
+// TODO try debug in vs code without .vscode settings
 
-    matrix = new double *[n];
-    for (int i = 0; i < n; i++)
-        matrix[i] = new double[n];
+// INPUT
+void InputSize(int64_t& size) {
+    std::cout << "Enter the number of elements in arrays\n";
+    if (!(std::cin >> size) || size <= 0) {
+        throw std::string("Failed to read matrix size!");
+    }
 }
 
-void delete_matrix(double **matrix, double *x, double *y, const int n) {
-    for (int i = 0; i < n; i++)
-        delete[] matrix[i];
+void InputVariant(bool& variant) {
+    if (!(std::cin >> variant) || (variant != 0 && variant != 1)) {
+        throw std::string("Failed to read variant!");
+    }
+}
 
+// MATRIX FUNCTIONS
+void AllocateMatrix(double**& matrix, double*& x, double*& y, const int n) {
+    x = new double[n];
+    y = new double[n];
+    matrix = new double*[n];
+    for (int64_t i = 0; i < n; i++) {
+        matrix[i] = new double[n];
+    }
+}
+
+void DeleteMatrix(double**& matrix, double* x, double* y, const int n) {
+    for (int64_t i = 0; i < n; i++) {
+        delete[] matrix[i];
+    }
     delete[] matrix;
     delete[] x;
     delete[] y;
 }
 
-void print_matrix(double **matrix, const int n) {
-    std::cout << "The resulting Cauchy matrix:\n";
+void PrintMatrix(double** matrix, const int n) {
+    std::cout << "Matrix:\n";
     std::cout << std::fixed << std::setprecision(3);
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
+    for (int64_t i = 0; i < n; i++) {
+        for (int64_t j = 0; j < n; j++) {
             std::cout << std::setw(4) << matrix[i][j] << ' ';
         }
         std::cout << '\n';
     }
 }
 
-void print_column_sums(double **matrix, const int n) {
+void FillMatrix(double**& matrix, double* x, double* y, int64_t size) {
+    for (int64_t i = 0; i < size; i++) {
+        for (int64_t j = 0; j < size; j++) {
+            double denom = x[i] + y[j];
+            if (denom == 0.0) {
+                throw std::string("Cannot build matrix: division by zero\n");
+            } else {
+                matrix[i][j] = 1.0 / denom;
+            }
+        }
+    }
+}
+
+void PrintColumnSums(double** matrix, const int n) {
     std::cout << "Sum of columns:\n";
     std::cout << std::fixed << std::setprecision(3);
-    for (int j = 0; j < n; j++) {
+    for (int64_t j = 0; j < n; j++) {
         double sum = 0.0;
-        for (int i = 0; i < n; i++) {
+        for (int64_t i = 0; i < n; i++) {
             sum += matrix[i][j];
         }
         std::cout << std::setw(4) << sum << ' ';
@@ -45,70 +75,83 @@ void print_column_sums(double **matrix, const int n) {
     std::cout << '\n';
 }
 
-int main(int argc, char *argv[]) {
-    std::cout << "Usage:\n";
-    std::cout << "  " << argv[0] << "          - manual input\n";
-    std::cout << "  " << argv[0] << " --random - random filling\n\n";
+void PrintArrays(double* x, double* y, const int size) {
+    std::cout << "Generated arrays:\n";
+    for (int64_t i = 0; i < size; i++) {
+        std::cout << x[i] << ' ';
+    }
+    std::cout << '\n';
+    for (int64_t i = 0; i < size; i++) {
+        std::cout << y[i] << ' ';
+    }
+    std::cout << '\n';
+}
 
-    int n;
-    std::cout << "Enter the number of elements in arrays\n";
-    if (!(std::cin >> n) || n <= 0) {
-        std::cout << "Error\n";
-        std::exit(1);
+// INPUT MATRIX
+void RandomInput(double* x, double* y, int64_t size) {
+    int32_t ra, rb;
+    std::cout << "Enter random bounds from a to b for nums in arrays\n";
+    if (!(std::cin >> ra >> rb)) {
+        throw std::string("Failed to read random bounds!");
     }
 
-    // Create arrays x y and matrix
-    double *x;
-    double *y;
-    double **matrix;
+    std::mt19937 gen(1337);
+    std::uniform_int_distribution<int32_t> dist(ra, rb);
 
-    allocate_matrix(x, y, matrix, n);
+    for (int64_t i = 0; i < size; i++)
+        x[i] = dist(gen);
 
-    if (argc > 1 && static_cast<std::string>(argv[1]) == "--random") {
-        // Random input
-        int ra, rb;
-        std::cout << "Enter random bounds from a to b for nums in array\n";
-        if (!(std::cin >> ra >> rb)) {
-            std::cout << "Error/n";
-            delete_matrix(matrix, x, y, n);
-            std::exit(1);
+    for (int64_t i = 0; i < size; i++)
+        y[i] = dist(gen);
+}
+
+void ManualInput(double* x, double* y, int64_t size) {
+    std::cout << "Enter numbers for x and y\n";
+    for (int64_t i = 0; i < size; i++) {
+        if (!(std::cin >> x[i])) {
+            throw std::string("Failed to read array element!");
         }
-        std::mt19937 gen(1337);
-        std::uniform_int_distribution<int> dist(ra, rb);
+    }
+    for (int64_t i = 0; i < size; i++) {
+        if (!(std::cin >> y[i])) {
+            throw std::string("Failed to read array element!");
+        }
+    }
+}
 
-        for (int i = 0; i < n; i++)
-            x[i] = dist(gen);
+void InputMatrix(double**& matrix, double* x, double* y, int64_t size) {
+    std::cout << "Select an input method (0 or 1):\n  0 - Random\n  1 - Manual\n";
+    bool variant = 0;
+    InputVariant(variant);
 
-        for (int i = 0; i < n; i++)
-            y[i] = dist(gen);
-
+    if (variant == 0) {
+        RandomInput(x, y, size);
+        PrintArrays(x, y, size);
     } else {
-        // Manual input
-        std::cout << "Enter numbers for x and y\n";
-        for (int i = 0; i < n; i++) {
-            std::cin >> x[i];
-        }
-        for (int i = 0; i < n; i++) {
-            std::cin >> y[i];
+        ManualInput(x, y, size);
+    }
+}
+
+int main() {
+    int64_t size = 0;
+    double* x = nullptr;
+    double* y = nullptr;
+    double** matrix = nullptr;
+
+    try {
+        InputSize(size);
+        AllocateMatrix(matrix, x, y, size);
+        InputMatrix(matrix, x, y, size);
+        FillMatrix(matrix, x, y, size);
+        PrintMatrix(matrix, size);
+        PrintColumnSums(matrix, size);
+
+        DeleteMatrix(matrix, x, y, size);
+    } catch (const char* msg) {
+        std::cerr << msg << '\n';
+        if (matrix != nullptr) {
+            DeleteMatrix(matrix, x, y, size);
         }
     }
-
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            double denom = x[i] + y[j];
-            if (denom == 0.0) {
-                std::cout << "Cannot build matrix: division by zero\n";
-                delete_matrix(matrix, x, y, n);
-                std::exit(1);
-            } else {
-                matrix[i][j] = 1.0 / denom;
-            }
-        }
-    }
-
-    print_matrix(matrix, n);
-    print_column_sums(matrix, n);
-
-    delete_matrix(matrix, x, y, n);
     return 0;
 }
