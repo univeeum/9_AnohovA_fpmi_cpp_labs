@@ -147,7 +147,7 @@ int main() {
         PrintColumnSums(matrix, size);
 
         DeleteMatrix(matrix, x, y, size);
-    } catch (const char* msg) {
+    } catch (const std::string& msg) {
         std::cerr << msg << '\n';
         if (matrix != nullptr) {
             DeleteMatrix(matrix, x, y, size);
