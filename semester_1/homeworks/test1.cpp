@@ -73,22 +73,22 @@ void manualInput(int** matrix, const int &rows, const int &columns) {
     }
 }
 
-void randomInput(int** matrix, const int &rows, const int &columns) {
+void randomInput(int** &matrix, const int rows, const int columns) {
     int ra, rb;
-        std::cout << "Enter bounds of nums in matrix - a and b\n";
+    std::cout << "Enter bounds of nums in matrix - a and b\n";
 
-        if (!(std::cin >> ra >> rb)) {
-            std::cout << "Error\n";
-            deleteMatrix(matrix, rows);
-            std::exit(1);
-        }
-        std::uniform_int_distribution<int> dist(ra, rb);
-        for (int i = 0; i < rows; i++) 
-            for (int j = 0;j < columns;j++) 
-                matrix[i][j] = dist(gen);
+    if (!(std::cin >> ra >> rb)) {
+        std::cout << "Error\n";
+        deleteMatrix(matrix, rows);
+        std::exit(1);
+    }
+    std::uniform_int_distribution<int> dist(ra, rb);
+    for (int i = 0; i < rows; i++) 
+        for (int j = 0;j < columns;j++) 
+            matrix[i][j] = dist(gen);
 }
 
-void chooseInput(int** &matrix, const int &rows, const int &columns) {
+void chooseInput(int** &matrix, const int rows, const int columns) {
     std::cout << "Select an input method (0 or 1):\n  0 - Random\n  1 - Manual\n";
     int variant = 0;
     inputVariant(variant);
