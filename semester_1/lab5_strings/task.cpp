@@ -1,6 +1,11 @@
 #include <cctype>
 #include <iostream>
+#include <string>
 #include <vector>
+
+bool IsTextChar(const char c) {
+    return std::isalnum(static_cast<unsigned char>(c));
+}
 
 void GetWords(const std::string &text, std::vector<std::string> &words) {
     if (text.empty()) {
@@ -9,7 +14,7 @@ void GetWords(const std::string &text, std::vector<std::string> &words) {
 
     std::string word;
     for (const char sym : text) {
-        if (std::isalnum(static_cast<unsigned char>(sym))) {
+        if (IsTextChar(sym)) {
             word += sym;
         } else if (!word.empty()) {
             words.push_back(word);
@@ -27,28 +32,26 @@ void GetLongestWords(std::string &result, const std::vector<std::string> &words)
     }
 
     size_t max_len = 0;
-    for (const auto &word : words) {
+    for (const std::string &word : words) {
         max_len = std::max(max_len, word.length());
     }
 
-    for (const auto &word : words) {
+    for (const std::string &word : words) {
         if (word.length() == max_len) {
-            result += word + " ";
+            result += word;
+            result += " ";
         }
     }
 }
 
 bool GetLine(std::string &line) {
     std::cout << "Input line:\n";
-    if (!std::getline(std::cin, line)) {
-        return false;
-    }
-    return true;
+    return static_cast<bool>(std::getline(std::cin, line));
 }
 
 void PrintString(const std::string &result) {
     if (result.empty()) {
-        std::cout << "Nothing to display :(\n" << result << '\n';
+        std::cout << "Nothing to display :(\n";
     } else {
         std::cout << "Result string:\n" << result << '\n';
     }
